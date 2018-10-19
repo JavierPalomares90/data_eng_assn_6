@@ -24,7 +24,8 @@ public class VariationII {
 		}
 	}
 
-	// generate and load the rows in sorted order on the primary key.
+	// generate the rows such that the primary key value is chosen at random,
+	// without replacement, from the integers.
 	private static List<TableRow> generateRows(){
 		int numRows = NUM_ROWS;
 		int min = 1;
