@@ -1,24 +1,23 @@
 import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+import org.apache.commons.lang3.RandomStringUtils;
 
 public class VariationI
 {
-	private static int NUM_ROWS = 0;
-	private static String SQL = "INSERT INTO benchmark(theKey,columnA,columnB,filler) VALUES(?,?,?,?)";
+	private static int NUM_ROWS = 50;
 	/**
 	 * @param args the command line arguments
 	 */
 	public static void main(String[] args) {
+		String url = "jdbc:sqlite:/Users/PXJ2D5A/Documents/hw3_db.db";
 		//Class.forName("org.sqlite.JDBC");
-		Connection connection = connect();
-		TableRow row = new TableRow();
-		row.theKey = 2;
-		row.columnA = 3;
-		row.columnB = 4;
-		row.filler = "this is a test";
-		insertData(connection, row);
+		Connection connection = Utils.connect(url);
+		List<TableRow> rows = generateRows();
+		//insertOneRow(connection, row);
+		Utils.insertBatch(connection,rows);
 		if(connection != null){
 			try {
 				connection.close();
@@ -28,37 +27,22 @@ public class VariationI
 		}
 	}
 
-	public static Connection connect() {
-		Connection conn = null;
-		try {
-			// db parameters
-			// Change this to the appropriate path
-			String url = "jdbc:sqlite:/Users/PXJ2D5A/Documents/hw3_db.db";
-			// create a connection to the database
-			conn = DriverManager.getConnection(url);
-
-			System.out.println("Connection to SQLite has been established.");
-
-		} catch (SQLException e) {
-			System.out.println(e.getMessage());
+	// generate and load the rows in sorted order on the primary key.
+	private static List<TableRow> generateRows(){
+		int numRows = NUM_ROWS;
+		int min = 1;
+		int max = 50;
+		List<TableRow> rows = new ArrayList<TableRow>();
+		for (int i = 0; i < numRows; i++){
+			TableRow row = new TableRow();
+			row.theKey = i;
+			Random r = new Random();
+			// columnA is a random int between 1 and 50
+			row.columnA = r.nextInt((max - min) + 1) + min;
+			row.columnB = r.nextInt((max - min) + 1) + min;
+			row.filler = RandomStringUtils.randomAlphabetic(246);
+			rows.add(row);
 		}
-		return conn;
+		return rows;
 	}
-
-	private static void insertData(Connection conn, TableRow row){
-		try{
-			PreparedStatement statement = conn.prepareStatement(SQL);
-			statement.setInt(1,row.theKey);
-			statement.setInt(2,row.columnA);
-			statement.setInt(3,row.columnB);
-			statement.setString(4,row.filler);
-			statement.executeUpdate();
-		}catch (SQLException e){
-			System.err.println(e.getMessage());
-		}
-		/**
-		 * TODO: Complete implementation
-		 */
-	}
-
 }
