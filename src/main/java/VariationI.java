@@ -33,10 +33,10 @@ public class VariationI
 		int min = 1;
 		int max = 50;
 		List<TableRow> rows = new ArrayList<TableRow>();
+		Random r = new Random();
 		for (int i = 0; i < numRows; i++){
 			TableRow row = new TableRow();
 			row.theKey = i;
-			Random r = new Random();
 			// columnA is a random int between 1 and 50
 			row.columnA = r.nextInt((max - min) + 1) + min;
 			row.columnB = r.nextInt((max - min) + 1) + min;
