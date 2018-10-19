@@ -1,11 +1,10 @@
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.List;
 
 public class Utils {
 	private static String SQL = "INSERT INTO benchmark(theKey,columnA,columnB,filler) VALUES(?,?,?,?)";
+	private static String CREATE_TABLE = "CREATE TABLE benchmark (  theKey NUMBER PRIMARY KEY,  columnA NUMBER,  columnB NUMBER,  filler CHAR(247) );";
+	private static String DROP_TABLE = "DROP TABLE benchmark";
 	public static Connection connect(String url) {
 		Connection conn = null;
 		try {
@@ -20,6 +19,31 @@ public class Utils {
 			System.out.println(e.getMessage());
 		}
 		return conn;
+	}
+
+	public static void createTable(Connection conn){
+		try
+		{
+			Statement stmt = conn.createStatement();
+			stmt.execute(CREATE_TABLE);
+
+		} catch (SQLException e)
+		{
+			e.printStackTrace();
+		}
+	}
+
+	public static void dropTable(Connection conn){
+		try
+		{
+			Statement stmt = conn.createStatement();
+			stmt.executeUpdate(DROP_TABLE);
+			conn.commit();
+		} catch (SQLException e)
+		{
+			e.printStackTrace();
+		}
+
 	}
 
 	public static void insertOneRow(Connection conn, TableRow row){

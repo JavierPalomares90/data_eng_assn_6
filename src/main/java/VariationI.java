@@ -15,9 +15,14 @@ public class VariationI
 		String url = "jdbc:sqlite:/Users/PXJ2D5A/Documents/hw3_db.db";
 		//Class.forName("org.sqlite.JDBC");
 		Connection connection = Utils.connect(url);
+		Utils.createTable(connection);
 		List<TableRow> rows = generateRows();
 		//insertOneRow(connection, row);
+		long startTime = System.nanoTime();
 		Utils.insertBatch(connection,rows);
+		long endTime = System.nanoTime();
+		long executionTime = endTime - startTime;
+		Utils.dropTable(connection);
 		if(connection != null){
 			try {
 				connection.close();
