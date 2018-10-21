@@ -9,6 +9,15 @@ public class VariationI
 {
 	private static int MIN = 1;
 	private static int MAX = 50000;
+
+	private static boolean CREATE_INDEX_A = true;
+	private static boolean CREATE_INDEX_B = false;
+	private static boolean CREATE_INDEX_A_B = false;
+
+	private static boolean DROP_TABLE_FLAG = false;
+	private static boolean CREATE_TABLE_FLAG = true;
+
+	private static boolean INSERT_DATA_FLAG = true;
 	/**
 	 * @param args the command line arguments
 	 */
@@ -25,15 +34,40 @@ public class VariationI
 			return;
 		}
 		Connection connection = Utils.connect(url);
-		Utils.createTable(connection);
-        List<TableRow> rows = generateRows(Utils.NUM_ROWS);
-		long startTime = System.nanoTime();
-        Utils.insertBatch(connection,rows);
-        long endTime = System.nanoTime();
-        long executionTime = endTime - startTime;
-		double seconds = (double) executionTime/ 1000000000.0;
-		System.out.println("Variation I took " + seconds + " to insert " + Utils.NUM_ROWS + " rows.");
-		Utils.dropTable(connection);
+		if(CREATE_TABLE_FLAG){
+			Utils.createTable(connection);
+		}
+		if(INSERT_DATA_FLAG){
+			List<TableRow> rows = generateRows(Utils.NUM_ROWS);
+			long startTime = System.nanoTime();
+			Utils.insertBatch(connection,rows);
+			Utils.createIndexColumnA(connection);
+			long endTime = System.nanoTime();
+			long executionTime = endTime - startTime;
+			double seconds = (double) executionTime/ 1000000000.0;
+			System.out.println("Variation I took " + seconds + " to insert " + Utils.NUM_ROWS + " rows.");
+
+		}
+		if(CREATE_INDEX_A){
+			long startTime = System.nanoTime();
+			Utils.createIndexColumnA(connection);
+			long endTime = System.nanoTime();
+			long executionTime = endTime - startTime;
+			double seconds = (double) executionTime/ 1000000000.0;
+			System.out.println("Variation I took " + seconds + " to createIndex A" + Utils.NUM_ROWS + " rows.");
+		}
+		if(CREATE_INDEX_B){
+			long startTime = System.nanoTime();
+			Utils.createIndexColumnB(connection);
+		}
+		if(CREATE_INDEX_A_B){
+			long startTime = System.nanoTime();
+			Utils.createIndexColumnAB(connection);
+		}
+		if(DROP_TABLE_FLAG){
+			long startTime = System.nanoTime();
+			Utils.dropTable(connection);
+		}
 		if(connection != null){
 			try {
 				connection.close();

@@ -5,6 +5,18 @@ public class Utils {
 	private static String SQL = "INSERT INTO benchmark(theKey,columnA,columnB,filler) VALUES(?,?,?,?)";
 	private static String CREATE_TABLE = "CREATE TABLE benchmark (  theKey NUMBER PRIMARY KEY,  columnA NUMBER,  columnB NUMBER,  filler CHAR(247) );";
 	private static String DROP_TABLE = "DROP TABLE benchmark";
+	private static String COLUMN_A_INDEX = "CREATE INDEX columnA_index on benchmark(columnA)";
+	private static String COLUMN_B_INDEX = "CREATE INDEX columnB_index on benchmark(columnB)";
+	private static String COLUMN_A_B_INDEX = "CREATE INDEX columnA_B_index on benchmark(columnA,columnB)";
+
+	private static String DROP_COLUMN_A_INDEX = "DROP INDEX columnA_index";
+	private static String DROP_COLUMN_B_INDEX = "DROP INDEX columnB_index";
+	private static String DROP_COLUMN_A_B_INDEX = "DROP INDEX columnA_B_index";
+
+	private static String QUERY_1 = "SELECT * FROM benchmark WHERE benchmark.columnA = ?";
+	private static String QUERY_2 = "SELECT * FROM benchmark WHERE benchmark.columnB = ?";
+	private static String QUERY_3 = "SELECT * FROM benchmark WHERE benchmark.columnA = ? AND benchmark.columnB = ?";
+
 	public static int NUM_ROWS   = 5000000;
 	public static int BATCH_SIZE = 50000;
 
@@ -63,8 +75,98 @@ public class Utils {
 		}catch (SQLException e){
 			System.err.println(e.getMessage());
 		}
-		/**
-		 * TODO: Complete implementation
+	}
+	private  static void executeSql(Connection conn, String sql){
+		PreparedStatement statement = null;
+		try
+		{
+			statement = conn.prepareStatement(sql);
+			statement.executeUpdate();
+		} catch (SQLException e)
+		{
+			e.printStackTrace();
+		} finally {
+
+			if(statement!=null){
+				try
+				{
+					statement.close();
+				}catch (SQLException e){
+					System.err.println(e.getMessage());
+				}
+			}
+		}
+
+	}
+
+	public static void dropIndexAB(Connection conn){
+		if(conn == null){
+			return;
+		}
+		executeSql(conn,DROP_COLUMN_A_B_INDEX);
+	}
+
+	public static void dropIndexA(Connection conn){
+		if(conn == null){
+			return;
+		}
+		executeSql(conn,DROP_COLUMN_A_INDEX);
+	}
+
+	public static void dropIndexB(Connection conn){
+		if(conn == null){
+			return;
+		}
+		executeSql(conn,DROP_COLUMN_B_INDEX);
+	}
+
+
+	public static void createIndexColumnAB(Connection conn){
+		if(conn == null){
+			return;
+		}
+		executeSql(conn,COLUMN_A_B_INDEX);
+	}
+
+	public static void createIndexColumnA(Connection connn){
+	    if(connn == null){
+	    	return;
+		}
+		executeSql(connn,COLUMN_A_INDEX);
+	}
+
+	public static void createIndexColumnB(Connection conn){
+		if(conn == null){
+			return;
+		}
+		executeSql(conn,COLUMN_B_INDEX);
+
+	}
+
+	public static void query3(Connection connection){
+		if(connection == null){
+			return;
+		}
+		/**TODO: Complete implemenation
+		 *
+		 */
+	}
+
+	public static void query2(Connection connection){
+		if(connection == null){
+			return;
+		}
+		/**TODO: Complete implemenation
+		 *
+		 */
+	}
+
+	public static void query1(Connection connection){
+		if(connection == null){
+			return;
+		}
+		/**TODO: Complete implemenation
+		 *
 		 */
 	}
 
