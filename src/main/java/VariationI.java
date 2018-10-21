@@ -7,8 +7,6 @@ import org.apache.commons.lang3.RandomStringUtils;
 
 public class VariationI
 {
-	private static int NUM_ROWS   = 5000000;
-	private static int BATCH_SIZE =  50000;
 	private static int MIN = 1;
 	private static int MAX = 50000;
 	/**
@@ -28,20 +26,13 @@ public class VariationI
 		}
 		Connection connection = Utils.connect(url);
 		Utils.createTable(connection);
-		//insertOneRow(connection, row);
-		int numLoops = NUM_ROWS / BATCH_SIZE;
-		double processTime = 0.0;
-		for(int i = 0; i < numLoops; i++)
-		{
-			List<TableRow> rows = generateRows(i, BATCH_SIZE);
-			long startTime = System.nanoTime();
-			Utils.insertBatch(connection,rows);
-			long endTime = System.nanoTime();
-			long executionTime = endTime - startTime;
-			processTime += (double) executionTime;
-		}
-		double seconds = (double) processTime / 1000000000.0;
-		System.out.println("Variation I took " + seconds + " to insert " + NUM_ROWS + " rows.");
+        List<TableRow> rows = generateRows(Utils.NUM_ROWS);
+		long startTime = System.nanoTime();
+        Utils.insertBatch(connection,rows);
+        long endTime = System.nanoTime();
+        long executionTime = endTime - startTime;
+		double seconds = (double) executionTime/ 1000000000.0;
+		System.out.println("Variation I took " + seconds + " to insert " + Utils.NUM_ROWS + " rows.");
 		Utils.dropTable(connection);
 		if(connection != null){
 			try {
@@ -53,7 +44,7 @@ public class VariationI
 	}
 
 	// generate and load the rows in sorted order on the primary key.
-	private static List<TableRow> generateRows(int n, int batchSize){
+	private static List<TableRow> generateRows( int batchSize){
 		int numRows = batchSize;
 		int min = MIN;
 		int max = MAX;
@@ -61,7 +52,7 @@ public class VariationI
 		Random r = new Random();
 		for (int i = 0; i < numRows; i++){
 			TableRow row = new TableRow();
-			row.theKey = i + n*numRows;
+			row.theKey = i;
 			// columnA is a random int between 1 and 50
 			row.columnA = r.nextInt((max - min) + 1) + min;
 			row.columnB = r.nextInt((max - min) + 1) + min;

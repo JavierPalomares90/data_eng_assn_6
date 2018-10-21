@@ -8,8 +8,6 @@ import java.util.List;
 import java.util.Random;
 
 public class VariationII {
-	private static int NUM_ROWS   = 5000000;
-	private static int BATCH_SIZE = 50000;
 	private static int MIN = 1;
 	private static int MAX = 50000;
 
@@ -30,19 +28,13 @@ public class VariationII {
 		}
 		Connection connection = Utils.connect(url);
 		Utils.createTable(connection);
-		int numLoops = NUM_ROWS / BATCH_SIZE;
-		double processTime = 0.0;
-		for(int i = 0; i < numLoops; i++)
-		{
-			List<TableRow> rows = generateRows(i, BATCH_SIZE);
-			long startTime = System.nanoTime();
-			Utils.insertBatch(connection,rows);
-			long endTime = System.nanoTime();
-			long executionTime = endTime - startTime;
-			processTime += (double) executionTime;
-		}
-		double seconds = (double) processTime / 1000000000.0;
-		System.out.println("Variation II took " + seconds + " to insert " + NUM_ROWS + " rows.");
+		List<TableRow> rows = generateRows(Utils.NUM_ROWS);
+		long startTime = System.nanoTime();
+		Utils.insertBatch(connection,rows);
+		long endTime = System.nanoTime();
+		long executionTime = endTime - startTime;
+		double seconds = (double) executionTime/ 1000000000.0;
+		System.out.println("Variation II took " + seconds + " to insert " + Utils.NUM_ROWS + " rows.");
 		Utils.dropTable(connection);
 
 		if(connection != null){
@@ -56,13 +48,13 @@ public class VariationII {
 
 	// generate the rows such that the primary key value is chosen at random,
 	// without replacement, from the integers.
-	private static List<TableRow> generateRows(int n, int batchSize){
-		int numRows = BATCH_SIZE;
+	private static List<TableRow> generateRows(int batchSize){
+		int numRows = Utils.BATCH_SIZE;
 		int min = MIN;
 		int max = MAX;
 		List<Integer> keys= new ArrayList<Integer>();
 		for(int i = 0; i < numRows; i++){
-			keys.add(i + n * numRows);
+			keys.add(i);
 		}
 
 		Random r = new Random();

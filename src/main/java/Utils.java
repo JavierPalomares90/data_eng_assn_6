@@ -5,6 +5,9 @@ public class Utils {
 	private static String SQL = "INSERT INTO benchmark(theKey,columnA,columnB,filler) VALUES(?,?,?,?)";
 	private static String CREATE_TABLE = "CREATE TABLE benchmark (  theKey NUMBER PRIMARY KEY,  columnA NUMBER,  columnB NUMBER,  filler CHAR(247) );";
 	private static String DROP_TABLE = "DROP TABLE benchmark";
+	public static int NUM_ROWS   = 5000000;
+	public static int BATCH_SIZE = 50000;
+
 	public static Connection connect(String url) {
 		Connection conn = null;
 		try {
@@ -76,24 +79,41 @@ public class Utils {
 			e.printStackTrace();
 			return;
 		}
-		for(TableRow row: rows){
-			try {
-				PreparedStatement statement = conn.prepareStatement(SQL);
+		int count = 0;
+		PreparedStatement statement = null;
+		try {
+            statement = conn.prepareStatement(SQL);
+            for(TableRow row: rows)
+			{
 				statement.setInt(1, row.theKey);
 				statement.setInt(2, row.columnA);
 				statement.setInt(3, row.columnB);
 				statement.setString(4, row.filler);
-				statement.executeUpdate();
-			}catch (SQLException e){
-				System.err.println(e.getMessage());
-				return;
+				statement.addBatch();
+				count++;
+				if (count % BATCH_SIZE == 0)
+				{
+					System.out.println("Commit the batch of size " + BATCH_SIZE);
+					int[] result = statement.executeBatch();
+					System.out.println("Number of rows inserted: " + result.length);
+					conn.commit();
+				}
 			}
-		}
 
-		try {
-			conn.commit();
-		} catch (SQLException e) {
-			e.printStackTrace();
+        }catch (SQLException e){
+            System.err.println(e.getMessage());
+            return;
+        }finally
+		{
+
+		    if(statement!=null){
+		        try
+				{
+					statement.close();
+				}catch (SQLException e){
+					System.err.println(e.getMessage());
+				}
+			}
 		}
 
 	}
