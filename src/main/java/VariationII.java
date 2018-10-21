@@ -16,10 +16,14 @@ public class VariationII {
 	private static boolean CREATE_INDEX_B = false;
 	private static boolean CREATE_INDEX_A_B = false;
 
-	private static boolean CREATE_TABLE_FLAG = true;
+	private static boolean CREATE_TABLE_FLAG = false;
 	private static boolean DROP_TABLE_FLAG = false;
 
-	private static boolean INSERT_DATA_FLAG = true;
+	private static boolean INSERT_DATA_FLAG = false;
+
+	private static boolean QUERY_1_FLAG = false;
+	private static boolean QUERY_2_FLAG = true;
+	private static boolean QUERY_3_FLAG = false;
 
 	/**
 	 * @param args the command line arguments
@@ -57,6 +61,59 @@ public class VariationII {
 		}
 		if(CREATE_INDEX_A_B){
 			Utils.createIndexColumnAB(connection);
+		}
+
+		if(QUERY_1_FLAG){
+			int numLoops = Utils.columnAVals.length;
+			double executionTime = 0.0;
+			for(int i = 0; i < numLoops; i++){
+				int n = Utils.columnAVals[i];
+				long startTime = System.nanoTime();
+				Utils.query1(connection,n);
+
+				long endTime = System.nanoTime();
+				long t = endTime - startTime;
+				executionTime += (double) t;
+
+			}
+			double seconds = (double) executionTime/ 1000000000.0;
+			System.out.println("Variation I took an average of " + seconds + " to run Query 1");
+
+		}
+		if(QUERY_2_FLAG){
+			int numLoops = Utils.columnBVals.length;
+			double executionTime = 0.0;
+			for(int i = 0; i < numLoops; i++){
+				int n = Utils.columnBVals[i];
+				long startTime = System.nanoTime();
+				Utils.query2(connection,n);
+
+				long endTime = System.nanoTime();
+				long t = endTime - startTime;
+				executionTime += (double) t;
+
+			}
+			double seconds = (double) executionTime/ 1000000000.0;
+			System.out.println("Variation I took an average of " + seconds + " to run Query 2");
+
+		}
+		if(QUERY_3_FLAG){
+			int numLoops = Utils.columnBVals.length;
+			double executionTime = 0.0;
+			for(int i = 0; i < numLoops; i++){
+				int n1 = Utils.columnAVals[i];
+				int n2 = Utils.columnBVals[i];
+				long startTime = System.nanoTime();
+				Utils.query3(connection,n1,n2);
+
+				long endTime = System.nanoTime();
+				long t = endTime - startTime;
+				executionTime += (double) t;
+
+			}
+			double seconds = (double) executionTime/ 1000000000.0;
+			System.out.println("Variation I took an average of " + seconds + " to run Query 3");
+
 		}
 		if(DROP_TABLE_FLAG){
 			Utils.dropTable(connection);

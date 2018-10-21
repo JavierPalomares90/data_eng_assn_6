@@ -152,11 +152,12 @@ public class Utils {
 			return;
 		}
 		PreparedStatement statement = null;
+		ResultSet rs = null;
 		try{
 			statement = connection.prepareStatement(QUERY_3);
 			statement.setInt(1,value1);
 			statement.setInt(2, value2);
-			statement.executeQuery();
+			rs = statement.executeQuery();
 		}catch (SQLException e){
 		    System.err.print(e.getMessage());
 		}finally
@@ -177,10 +178,12 @@ public class Utils {
 			return;
 		}
 		PreparedStatement statement = null;
+		ResultSet rs = null;
 		try{
 			statement = connection.prepareStatement(QUERY_2);
 			statement.setInt(1,value);
-			statement.executeQuery();
+			rs = statement.executeQuery();
+
 		}catch (SQLException e){
 			System.err.print(e.getMessage());
 		}finally
@@ -201,10 +204,11 @@ public class Utils {
 			return;
 		}
 		PreparedStatement statement = null;
+		ResultSet rs = null;
 		try{
 			statement = connection.prepareStatement(QUERY_1);
 			statement.setInt(1,value);
-			statement.executeQuery();
+			rs = statement.executeQuery();
 		}catch (SQLException e){
 			System.err.print(e.getMessage());
 		}finally
