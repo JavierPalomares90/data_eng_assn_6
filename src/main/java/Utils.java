@@ -21,8 +21,8 @@ public class Utils {
 	public static int NUM_ROWS   = 5000000;
 	public static int BATCH_SIZE = 50000;
 
-	public static int[] columnAVals = {1,2,3,4,5,6,7,8,9,0};
-	public static int[] columnBVals = {1,2,3,4,5,6,7,8,9,0};
+	public static int[] columnAVals = {10301,23,308,7785,45898,867,73,88,343,234};
+	public static int[] columnBVals = {18775,3564,87,4787,5,92,345,48998,12,9};
 
 	public static Connection connect(String url) {
 		Connection conn = null;
@@ -38,6 +38,17 @@ public class Utils {
 			System.out.println(e.getMessage());
 		}
 		return conn;
+	}
+
+	public static void closeConnection(Connection connection){
+		if(connection != null){
+			try {
+				connection.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+
 	}
 
 	public static void createTable(Connection conn){

@@ -19,16 +19,18 @@ public class VariationII {
 	private static boolean CREATE_TABLE_FLAG = false;
 	private static boolean DROP_TABLE_FLAG = false;
 
-	private static boolean INSERT_DATA_FLAG = false;
+	private static boolean INSERT_DATA_FLAG = true;
 
 	private static boolean QUERY_1_FLAG = false;
-	private static boolean QUERY_2_FLAG = true;
+	private static boolean QUERY_2_FLAG = false;
 	private static boolean QUERY_3_FLAG = false;
+
 
 	/**
 	 * @param args the command line arguments
 	 */
-	public static void main(String[] args) {
+	public static double run(boolean createTable, boolean insertData, boolean createIndexA, boolean createIndexB,
+						   boolean createIndexAB, boolean query1, boolean query2, boolean query3, boolean dropTable){
 		String url = "jdbc:sqlite:C:/Users/javie/Documents/Data_Engineering/hw2.db";
 		// Load the driver
 		try
@@ -38,13 +40,15 @@ public class VariationII {
 		{
 			e.printStackTrace();
 			System.err.println("Unable to find driver");
-			return;
+			return 0;
 		}
 		Connection connection = Utils.connect(url);
-		if(CREATE_TABLE_FLAG){
+		if(createTable){
 			Utils.createTable(connection);
+			Utils.closeConnection(connection);
+			return 0;
 		}
-		if(INSERT_DATA_FLAG){
+		if(insertData){
 			List<TableRow> rows = generateRows(Utils.NUM_ROWS);
 			long startTime = System.nanoTime();
 			Utils.insertBatch(connection,rows);
@@ -52,18 +56,26 @@ public class VariationII {
 			long executionTime = endTime - startTime;
 			double seconds = (double) executionTime/ 1000000000.0;
 			System.out.println("Variation II took " + seconds + " to insert " + Utils.NUM_ROWS + " rows.");
+			Utils.closeConnection(connection);
+			return executionTime;
 		}
-		if(CREATE_INDEX_A){
+		if(createIndexA){
 			Utils.createIndexColumnA(connection);
+			Utils.closeConnection(connection);
+			return 0;
 		}
-		if(CREATE_INDEX_B){
+		if(createIndexB){
 			Utils.createIndexColumnB(connection);
+			Utils.closeConnection(connection);
+			return 0;
 		}
-		if(CREATE_INDEX_A_B){
+		if(createIndexAB){
 			Utils.createIndexColumnAB(connection);
+			Utils.closeConnection(connection);
+			return 0;
 		}
 
-		if(QUERY_1_FLAG){
+		if(query1){
 			int numLoops = Utils.columnAVals.length;
 			double executionTime = 0.0;
 			for(int i = 0; i < numLoops; i++){
@@ -76,11 +88,14 @@ public class VariationII {
 				executionTime += (double) t;
 
 			}
+			executionTime = executionTime / (1.0 * numLoops);
 			double seconds = (double) executionTime/ 1000000000.0;
-			System.out.println("Variation I took an average of " + seconds + " to run Query 1");
+			System.out.println("Variation II took an average of " + seconds + " to run Query 1");
+			Utils.closeConnection(connection);
+			return executionTime;
 
 		}
-		if(QUERY_2_FLAG){
+		if(query2){
 			int numLoops = Utils.columnBVals.length;
 			double executionTime = 0.0;
 			for(int i = 0; i < numLoops; i++){
@@ -93,11 +108,14 @@ public class VariationII {
 				executionTime += (double) t;
 
 			}
+			executionTime = executionTime / (1.0 * numLoops);
 			double seconds = (double) executionTime/ 1000000000.0;
-			System.out.println("Variation I took an average of " + seconds + " to run Query 2");
+			System.out.println("Variation II took an average of " + seconds + " to run Query 2");
+			Utils.closeConnection(connection);
+			return executionTime;
 
 		}
-		if(QUERY_3_FLAG){
+		if(query3){
 			int numLoops = Utils.columnBVals.length;
 			double executionTime = 0.0;
 			for(int i = 0; i < numLoops; i++){
@@ -111,21 +129,19 @@ public class VariationII {
 				executionTime += (double) t;
 
 			}
+			executionTime = executionTime / (1.0 * numLoops);
 			double seconds = (double) executionTime/ 1000000000.0;
-			System.out.println("Variation I took an average of " + seconds + " to run Query 3");
+			System.out.println("Variation II took an average of " + seconds + " to run Query 3");
+			Utils.closeConnection(connection);
+			return executionTime;
 
 		}
-		if(DROP_TABLE_FLAG){
+		if(dropTable){
 			Utils.dropTable(connection);
+			Utils.closeConnection(connection);
+			return 0;
 		}
-
-		if(connection != null){
-			try {
-				connection.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}
+		return 0;
 	}
 
 	// generate the rows such that the primary key value is chosen at random,
