@@ -17,8 +17,12 @@ public class Utils {
 	private static String QUERY_2 = "SELECT * FROM benchmark WHERE benchmark.columnB = ?";
 	private static String QUERY_3 = "SELECT * FROM benchmark WHERE benchmark.columnA = ? AND benchmark.columnB = ?";
 
+
 	public static int NUM_ROWS   = 5000000;
 	public static int BATCH_SIZE = 50000;
+
+	public static int[] columnAVals = {1,2,3,4,5,6,7,8,9,0};
+	public static int[] columnBVals = {1,2,3,4,5,6,7,8,9,0};
 
 	public static Connection connect(String url) {
 		Connection conn = null;
@@ -143,31 +147,77 @@ public class Utils {
 
 	}
 
-	public static void query3(Connection connection){
+	public static void query3(Connection connection,int value1, int value2){
 		if(connection == null){
 			return;
 		}
-		/**TODO: Complete implemenation
-		 *
-		 */
+		PreparedStatement statement = null;
+		try{
+			statement = connection.prepareStatement(QUERY_3);
+			statement.setInt(1,value1);
+			statement.setInt(2, value2);
+			statement.executeQuery();
+		}catch (SQLException e){
+		    System.err.print(e.getMessage());
+		}finally
+		{
+			if(statement!=null){
+				try
+				{
+					statement.close();
+				}catch (SQLException e){
+					System.err.println(e.getMessage());
+				}
+			}
+		}
 	}
 
-	public static void query2(Connection connection){
+	public static void query2(Connection connection, int value){
 		if(connection == null){
 			return;
 		}
-		/**TODO: Complete implemenation
-		 *
-		 */
+		PreparedStatement statement = null;
+		try{
+			statement = connection.prepareStatement(QUERY_2);
+			statement.setInt(1,value);
+			statement.executeQuery();
+		}catch (SQLException e){
+			System.err.print(e.getMessage());
+		}finally
+		{
+			if(statement!=null){
+				try
+				{
+					statement.close();
+				}catch (SQLException e){
+					System.err.println(e.getMessage());
+				}
+			}
+		}
 	}
 
-	public static void query1(Connection connection){
+	public static void query1(Connection connection,int value){
 		if(connection == null){
 			return;
 		}
-		/**TODO: Complete implemenation
-		 *
-		 */
+		PreparedStatement statement = null;
+		try{
+			statement = connection.prepareStatement(QUERY_1);
+			statement.setInt(1,value);
+			statement.executeQuery();
+		}catch (SQLException e){
+			System.err.print(e.getMessage());
+		}finally
+		{
+			if(statement!=null){
+				try
+				{
+					statement.close();
+				}catch (SQLException e){
+					System.err.println(e.getMessage());
+				}
+			}
+		}
 	}
 
 	public static void insertBatch(Connection conn, List<TableRow> rows){

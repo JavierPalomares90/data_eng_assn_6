@@ -12,7 +12,7 @@ public class VariationII {
 	private static int MIN = 1;
 	private static int MAX = 50000;
 
-	private static boolean CREATE_INDEX_A = true;
+	private static boolean CREATE_INDEX_A = false;
 	private static boolean CREATE_INDEX_B = false;
 	private static boolean CREATE_INDEX_A_B = false;
 
