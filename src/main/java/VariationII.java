@@ -49,7 +49,7 @@ public class VariationII {
 	// generate the rows such that the primary key value is chosen at random,
 	// without replacement, from the integers.
 	private static List<TableRow> generateRows(int batchSize){
-		int numRows = Utils.BATCH_SIZE;
+		int numRows = batchSize;
 		int min = MIN;
 		int max = MAX;
 		List<Integer> keys= new ArrayList<Integer>();
