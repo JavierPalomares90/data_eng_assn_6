@@ -3,6 +3,8 @@ import java.util.List;
 public class Drive
 {
     private static String TAB = "\t\t";
+    private static double NANOS_TO_SEC = 1000000000.0;
+
     public static void main(String[] args) {
         /** Variation I **/
         Utils.load();
@@ -12,7 +14,7 @@ public class Drive
         List<TableRow> rows = VariationI.generateRows(Utils.NUM_ROWS);
         double insertVar1 = Utils.insertData(rows);
 
-        // query 1
+        // query 1 with no indices
         double query1Var1 = Utils.query1();
         // query 2
         double query2Var1 = Utils.query2();
@@ -21,6 +23,8 @@ public class Drive
 
         // createIndexA
         Utils.createIndexA();
+
+        // Query with indices
         // query 1
         double query1Var1IndexA = Utils.query1();
         // query 2
@@ -33,6 +37,7 @@ public class Drive
 
         // create Index B
         Utils.createIndexB();
+        // Query with index B
         // query 1
         double query1Var1IndexB = Utils.query1();
         // query 2
@@ -46,6 +51,7 @@ public class Drive
 
         // create index AB
         Utils.createIndexAB();
+        // Query iwth Index AB
         // query 1
         double query1Var1IndexAB = Utils.query1();
         // query 2
@@ -55,11 +61,12 @@ public class Drive
 
         // Drop the table
         Utils.dropTable();
+
         // create the table;
         Utils.createTable();
         // create index A
         Utils.createIndexA();
-        // load the date
+        // load the date with index A
         double insertVar1IndexA = Utils.insertData(rows);
 
         // Drop  the table
@@ -68,7 +75,7 @@ public class Drive
         Utils.createTable();
         // create index B
         Utils.createIndexB();
-        // load the date
+        // load the date with indexB
         double insertVar1IndexB = Utils.insertData(rows);
 
         // Drop  the table
@@ -77,7 +84,7 @@ public class Drive
         Utils.createTable();
         // create index AB
         Utils.createIndexAB();
-        // load the date
+        // load the date with index AB
         double insertVar1IndexAB = Utils.insertData(rows);
         Utils.dropTable();
 
@@ -92,6 +99,7 @@ public class Drive
         rows = VariationII.generateRows(Utils.NUM_ROWS);
         double insertVar2 = Utils.insertData(rows);
 
+        // Query with no indicex
         // query 1
         double query1Var2 = Utils.query1();
         // query 2
@@ -100,6 +108,7 @@ public class Drive
         double query3Var2 = Utils.query3();
 
         // createIndexA
+        // Query with index A
         Utils.createIndexA();
         // query 1
         double query1Var2IndexA = Utils.query1();
@@ -112,7 +121,9 @@ public class Drive
         Utils.dropIndexA();
 
         // create Index B
+
         Utils.createIndexB();
+        // Query with Index B
         // query 1
         double query1Var2IndexB = Utils.query1();
         // query 2
@@ -125,6 +136,7 @@ public class Drive
 
         // create index AB
         Utils.createIndexAB();
+        // Query with index AB
         // query 1
         double query1Var2IndexAB = Utils.query1();
         // query 2
@@ -147,7 +159,8 @@ public class Drive
         Utils.createTable();
         // create index B
         Utils.createIndexB();
-        // load the date
+
+        // load the data with index B
         double insertVar2IndexB = Utils.insertData(rows);
 
         // Drop  the table
@@ -156,7 +169,7 @@ public class Drive
         Utils.createTable();
         // create index AB
         Utils.createIndexAB();
-        // load the date
+        // load the date with index AB
         double insertVar2IndexAB = Utils.insertData(rows);
         // Drop  the table
         Utils.dropTable();
@@ -164,16 +177,16 @@ public class Drive
         System.out.print("\n\n");
 
         System.out.println("========VARIATION I==========");
-        System.out.println(insertVar1/1000000000.0       + TAB + query1Var1/1000000000.0       + TAB + query2Var1/1000000000.0       + TAB + query3Var1/1000000000.0 + "\n");
-        System.out.println(insertVar1IndexA/1000000000.0 + TAB + query1Var1IndexA/1000000000.0 + TAB + query2Var1IndexA/1000000000.0 + TAB + query3Var1IndexA/1000000000.0+ "\n");
-        System.out.println(insertVar1IndexB/1000000000.0 + TAB + query1Var1IndexB/1000000000.0 + TAB + query2Var1IndexB/1000000000.0 + TAB + query3Var1IndexB/1000000000.0 + "\n");
-        System.out.println(insertVar1IndexAB/1000000000.0 + TAB + query1Var1IndexAB/1000000000.0 + TAB + query2Var1IndexAB/1000000000.0 + TAB + query3Var1IndexAB/1000000000.0 + "\n");
+        System.out.println(insertVar1/NANOS_TO_SEC       + TAB + query1Var1/NANOS_TO_SEC       + TAB + query2Var1/NANOS_TO_SEC       + TAB + query3Var1/NANOS_TO_SEC + "\n");
+        System.out.println(insertVar1IndexA/NANOS_TO_SEC + TAB + query1Var1IndexA/NANOS_TO_SEC + TAB + query2Var1IndexA/NANOS_TO_SEC + TAB + query3Var1IndexA/NANOS_TO_SEC+ "\n");
+        System.out.println(insertVar1IndexB/NANOS_TO_SEC + TAB + query1Var1IndexB/NANOS_TO_SEC + TAB + query2Var1IndexB/NANOS_TO_SEC + TAB + query3Var1IndexB/NANOS_TO_SEC + "\n");
+        System.out.println(insertVar1IndexAB/NANOS_TO_SEC + TAB + query1Var1IndexAB/NANOS_TO_SEC + TAB + query2Var1IndexAB/NANOS_TO_SEC + TAB + query3Var1IndexAB/NANOS_TO_SEC + "\n");
 
         System.out.println("========VARIATION II==========");
-        System.out.println(insertVar2/1000000000.0       + TAB + query1Var2/1000000000.0       + TAB + query2Var2/1000000000.0       + TAB + query3Var2/1000000000.0 + "\n");
-        System.out.println(insertVar2IndexA/1000000000.0 + TAB + query1Var2IndexA/1000000000.0 + TAB + query2Var2IndexA/1000000000.0 + TAB + query3Var2IndexA/1000000000.0+ "\n");
-        System.out.println(insertVar2IndexB/1000000000.0 + TAB + query1Var2IndexB/1000000000.0 + TAB + query2Var2IndexB/1000000000.0 + TAB + query3Var2IndexB/1000000000.0 + "\n");
-        System.out.println(insertVar2IndexAB/1000000000.0 + TAB + query1Var2IndexAB/1000000000.0 + TAB + query2Var2IndexAB/1000000000.0 + TAB + query3Var2IndexAB/1000000000.0 + "\n");
+        System.out.println(insertVar2/NANOS_TO_SEC       + TAB + query1Var2/NANOS_TO_SEC       + TAB + query2Var2/NANOS_TO_SEC       + TAB + query3Var2/NANOS_TO_SEC + "\n");
+        System.out.println(insertVar2IndexA/NANOS_TO_SEC + TAB + query1Var2IndexA/NANOS_TO_SEC + TAB + query2Var2IndexA/NANOS_TO_SEC + TAB + query3Var2IndexA/NANOS_TO_SEC+ "\n");
+        System.out.println(insertVar2IndexB/NANOS_TO_SEC + TAB + query1Var2IndexB/NANOS_TO_SEC + TAB + query2Var2IndexB/NANOS_TO_SEC + TAB + query3Var2IndexB/NANOS_TO_SEC + "\n");
+        System.out.println(insertVar2IndexAB/NANOS_TO_SEC + TAB + query1Var2IndexAB/NANOS_TO_SEC + TAB + query2Var2IndexAB/NANOS_TO_SEC + TAB + query3Var2IndexAB/NANOS_TO_SEC + "\n");
 
         System.out.print("\n\n");
         System.out.println("========RELATIVE MEASUREMENTS==========");
