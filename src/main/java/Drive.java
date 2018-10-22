@@ -2,7 +2,7 @@ import java.util.List;
 
 public class Drive
 {
-    private static String TAB = "\t";
+    private static String TAB = "\t\t";
     public static void main(String[] args) {
         /** Variation I **/
         Utils.load();
@@ -181,18 +181,40 @@ public class Drive
         Utils.createIndexAB();
         // load the date
         double insertVar2IndexAB = Utils.insertData(rows);
+        // Drop  the table
+        Utils.dropTable();
+
+        System.out.print("\n\n");
 
         System.out.println("========VARIATION I==========");
-        System.out.println(insertVar1       + TAB + query1Var1       + TAB + query2Var1       + TAB + query3Var1 + "\n");
-        System.out.println(insertVar1IndexA + TAB + query1Var1IndexA + TAB + query2Var1IndexA + TAB + query3Var1IndexA+ "\n");
-        System.out.println(insertVar1IndexB + TAB + query1Var1IndexB + TAB + query2Var1IndexB + TAB + query3Var1IndexB + "\n");
-        System.out.println(insertVar1IndexAB + TAB + query1Var1IndexAB + TAB + query2Var1IndexAB + TAB + query3Var1IndexAB + "\n");
+        System.out.println(insertVar1/1000000000.0       + TAB + query1Var1/1000000000.0       + TAB + query2Var1/1000000000.0       + TAB + query3Var1/1000000000.0 + "\n");
+        System.out.println(insertVar1IndexA/1000000000.0 + TAB + query1Var1IndexA/1000000000.0 + TAB + query2Var1IndexA/1000000000.0 + TAB + query3Var1IndexA/1000000000.0+ "\n");
+        System.out.println(insertVar1IndexB/1000000000.0 + TAB + query1Var1IndexB/1000000000.0 + TAB + query2Var1IndexB/1000000000.0 + TAB + query3Var1IndexB/1000000000.0 + "\n");
+        System.out.println(insertVar1IndexAB/1000000000.0 + TAB + query1Var1IndexAB/1000000000.0 + TAB + query2Var1IndexAB/1000000000.0 + TAB + query3Var1IndexAB/1000000000.0 + "\n");
 
         System.out.println("========VARIATION II==========");
-        System.out.println(insertVar2       + TAB + query1Var2       + TAB + query2Var2       + TAB + query3Var2 + "\n");
-        System.out.println(insertVar2IndexA + TAB + query1Var2IndexA + TAB + query2Var2IndexA + TAB + query3Var2IndexA+ "\n");
-        System.out.println(insertVar2IndexB + TAB + query1Var2IndexB + TAB + query2Var2IndexB + TAB + query3Var2IndexB + "\n");
-        System.out.println(insertVar2IndexAB + TAB + query1Var2IndexAB + TAB + query2Var2IndexAB + TAB + query3Var2IndexAB + "\n");
+        System.out.println(insertVar2/1000000000.0       + TAB + query1Var2/1000000000.0       + TAB + query2Var2/1000000000.0       + TAB + query3Var2/1000000000.0 + "\n");
+        System.out.println(insertVar2IndexA/1000000000.0 + TAB + query1Var2IndexA/1000000000.0 + TAB + query2Var2IndexA/1000000000.0 + TAB + query3Var2IndexA/1000000000.0+ "\n");
+        System.out.println(insertVar2IndexB/1000000000.0 + TAB + query1Var2IndexB/1000000000.0 + TAB + query2Var2IndexB/1000000000.0 + TAB + query3Var2IndexB/1000000000.0 + "\n");
+        System.out.println(insertVar2IndexAB/1000000000.0 + TAB + query1Var2IndexAB/1000000000.0 + TAB + query2Var2IndexAB/1000000000.0 + TAB + query3Var2IndexAB/1000000000.0 + "\n");
+
+        System.out.print("\n\n");
+        System.out.println("========RELATIVE MEASUREMENTS==========");
+        System.out.print("\n\n");
+
+        System.out.println("========VARIATION I==========");
+        System.out.println(insertVar1/insertVar1       + TAB + query1Var1/query1Var1       + TAB + query2Var1/query2Var1       + TAB + query3Var1/query3Var1 + "\n");
+        System.out.println(insertVar1IndexA/insertVar1 + TAB + query1Var1IndexA/query1Var1 + TAB + query2Var1IndexA/query2Var1 + TAB + query3Var1IndexA/query3Var1+ "\n");
+        System.out.println(insertVar1IndexB/insertVar1 + TAB + query1Var1IndexB/query1Var1 + TAB + query2Var1IndexB/query2Var1 + TAB + query3Var1IndexB/query3Var1 + "\n");
+        System.out.println(insertVar1IndexAB/insertVar1 + TAB + query1Var1IndexAB/query1Var1 + TAB + query2Var1IndexAB/query2Var1 + TAB + query3Var1IndexAB/query3Var1 + "\n");
+
+        System.out.println("========VARIATION II==========");
+        System.out.println(insertVar2/insertVar1       + TAB + query1Var2/query1Var1       + TAB + query2Var2/query2Var1       + TAB + query3Var2/query3Var1 + "\n");
+        System.out.println(insertVar2IndexA/insertVar1 + TAB + query1Var2IndexA/query1Var1 + TAB + query2Var2IndexA/query2Var1 + TAB + query3Var2IndexA/query3Var1+ "\n");
+        System.out.println(insertVar2IndexB/insertVar1 + TAB + query1Var2IndexB/query1Var1 + TAB + query2Var2IndexB/query2Var1 + TAB + query3Var2IndexB/query3Var1 + "\n");
+        System.out.println(insertVar2IndexAB/insertVar1 + TAB + query1Var2IndexAB/query1Var1 + TAB + query2Var2IndexAB/query2Var1 + TAB + query3Var2IndexAB/query3Var1 + "\n");
+
+
     }
 
 }
