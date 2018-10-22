@@ -7,8 +7,14 @@ public class Drive
 
     public static void main(String[] args) {
         /** Variation I **/
+        if(args.length < 1){
+            System.out.println("Usage: Drive [db_save_location]");
+            return;
+        }
+        // get the save location of the filename
+        String filename = args[0];
         Utils.load();
-        Utils.createDB("C:/Users/javie/Documents/Data_Engineering/hw6.db");
+        Utils.createDB(filename);
         // Create the table
         Utils.createTable();
         // Insert the data with no index
