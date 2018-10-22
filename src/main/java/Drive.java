@@ -8,31 +8,24 @@ public class Drive
         Utils.load();
         // Create the table
         Utils.createTable();
-        // Insert the data
+        // Insert the data with no index
         List<TableRow> rows = VariationI.generateRows(Utils.NUM_ROWS);
         double insertVar1 = Utils.insertData(rows);
 
-        // Clear the cache
         // query 1
-        Utils.clearCache();
         double query1Var1 = Utils.query1();
         // query 2
-        Utils.clearCache();
         double query2Var1 = Utils.query2();
         // query 3
-        Utils.clearCache();
         double query3Var1 = Utils.query3();
 
         // createIndexA
         Utils.createIndexA();
         // query 1
-        Utils.clearCache();
         double query1Var1IndexA = Utils.query1();
         // query 2
-        Utils.clearCache();
         double query2Var1IndexA = Utils.query2();
         // query 3
-        Utils.clearCache();
         double query3Var1IndexA = Utils.query3();
 
         // drop Index a
@@ -41,13 +34,10 @@ public class Drive
         // create Index B
         Utils.createIndexB();
         // query 1
-        Utils.clearCache();
         double query1Var1IndexB = Utils.query1();
         // query 2
-        Utils.clearCache();
         double query2Var1IndexB = Utils.query2();
         // query 3
-        Utils.clearCache();
         double query3Var1IndexB = Utils.query3();
 
 
@@ -57,13 +47,10 @@ public class Drive
         // create index AB
         Utils.createIndexAB();
         // query 1
-        Utils.clearCache();
         double query1Var1IndexAB = Utils.query1();
         // query 2
-        Utils.clearCache();
         double query2Var1IndexAB = Utils.query2();
         // query 3
-        Utils.clearCache();
         double query3Var1IndexAB = Utils.query3();
 
         // Drop the table
@@ -101,30 +88,24 @@ public class Drive
         /** Variation II **/
         // Create the table
         Utils.createTable();
+        // Insert data with no index
         rows = VariationII.generateRows(Utils.NUM_ROWS);
         double insertVar2 = Utils.insertData(rows);
 
-        // Clear the cache
         // query 1
-        Utils.clearCache();
         double query1Var2 = Utils.query1();
         // query 2
-        Utils.clearCache();
         double query2Var2 = Utils.query2();
         // query 3
-        Utils.clearCache();
         double query3Var2 = Utils.query3();
 
         // createIndexA
         Utils.createIndexA();
         // query 1
-        Utils.clearCache();
         double query1Var2IndexA = Utils.query1();
         // query 2
-        Utils.clearCache();
         double query2Var2IndexA = Utils.query2();
         // query 3
-        Utils.clearCache();
         double query3Var2IndexA = Utils.query3();
 
         // drop Index a
@@ -133,13 +114,10 @@ public class Drive
         // create Index B
         Utils.createIndexB();
         // query 1
-        Utils.clearCache();
         double query1Var2IndexB = Utils.query1();
         // query 2
-        Utils.clearCache();
         double query2Var2IndexB = Utils.query2();
         // query 3
-        Utils.clearCache();
         double query3Var2IndexB = Utils.query3();
 
         // drop Index B
@@ -148,13 +126,10 @@ public class Drive
         // create index AB
         Utils.createIndexAB();
         // query 1
-        Utils.clearCache();
         double query1Var2IndexAB = Utils.query1();
         // query 2
-        Utils.clearCache();
         double query2Var2IndexAB = Utils.query2();
         // query 3
-        Utils.clearCache();
         double query3Var2IndexAB = Utils.query3();
 
         // Drop the table
@@ -163,7 +138,7 @@ public class Drive
         Utils.createTable();
         // create index A
         Utils.createIndexA();
-        // load the date
+        // load the date with index A
         double insertVar2IndexA = Utils.insertData(rows);
 
         // Drop  the table

@@ -37,12 +37,6 @@ public class Utils {
 		}
 	}
 
-	public static void clearCache(){
-		/**
-		 * TODO: Complete implementation
-		 */
-	}
-
 	public static double createTable(){
 		Connection connection = Utils.connect(url);
 		long startTime = System.nanoTime();
