@@ -37,6 +37,12 @@ public class Utils {
 		}
 	}
 
+	public static void clearCache(){
+		/**
+		 * TODO: Complete implementation
+		 */
+	}
+
 	public static double createTable(){
 		Connection connection = Utils.connect(url);
 		long startTime = System.nanoTime();
@@ -187,7 +193,7 @@ public class Utils {
 		Utils.closeConnection(connection);
 
 	}
-	public static Connection connect(String url) {
+	private static Connection connect(String url) {
 		Connection conn = null;
 		try {
 			// db parameters
@@ -203,7 +209,7 @@ public class Utils {
 		return conn;
 	}
 
-	public static void closeConnection(Connection connection){
+	private static void closeConnection(Connection connection){
 		if(connection != null){
 			try {
 				connection.close();
@@ -214,7 +220,7 @@ public class Utils {
 
 	}
 
-	public static void createTable(Connection conn){
+	private static void createTable(Connection conn){
 		try
 		{
 			Statement stmt = conn.createStatement();
@@ -226,7 +232,7 @@ public class Utils {
 		}
 	}
 
-	public static void dropTable(Connection conn){
+	private static void dropTable(Connection conn){
 		try
 		{
 			Statement stmt = conn.createStatement();
@@ -239,7 +245,7 @@ public class Utils {
 
 	}
 
-	public static void insertOneRow(Connection conn, TableRow row){
+	private static void insertOneRow(Connection conn, TableRow row){
 		if(conn == null){
 			return;
 		}
@@ -277,21 +283,21 @@ public class Utils {
 
 	}
 
-	public static void dropIndexAB(Connection conn){
+	private static void dropIndexAB(Connection conn){
 		if(conn == null){
 			return;
 		}
 		executeSql(conn,DROP_COLUMN_A_B_INDEX);
 	}
 
-	public static void dropIndexA(Connection conn){
+	private static void dropIndexA(Connection conn){
 		if(conn == null){
 			return;
 		}
 		executeSql(conn,DROP_COLUMN_A_INDEX);
 	}
 
-	public static void dropIndexB(Connection conn){
+	private static void dropIndexB(Connection conn){
 		if(conn == null){
 			return;
 		}
@@ -299,21 +305,21 @@ public class Utils {
 	}
 
 
-	public static void createIndexColumnAB(Connection conn){
+	private static void createIndexColumnAB(Connection conn){
 		if(conn == null){
 			return;
 		}
 		executeSql(conn,COLUMN_A_B_INDEX);
 	}
 
-	public static void createIndexColumnA(Connection connn){
+	private static void createIndexColumnA(Connection connn){
 	    if(connn == null){
 	    	return;
 		}
 		executeSql(connn,COLUMN_A_INDEX);
 	}
 
-	public static void createIndexColumnB(Connection conn){
+	private static void createIndexColumnB(Connection conn){
 		if(conn == null){
 			return;
 		}
@@ -321,7 +327,7 @@ public class Utils {
 
 	}
 
-	public static void query3(Connection connection,int value1, int value2){
+	private static void query3(Connection connection,int value1, int value2){
 		if(connection == null){
 			return;
 		}
@@ -347,7 +353,7 @@ public class Utils {
 		}
 	}
 
-	public static void query2(Connection connection, int value){
+	private static void query2(Connection connection, int value){
 		if(connection == null){
 			return;
 		}
@@ -373,7 +379,7 @@ public class Utils {
 		}
 	}
 
-	public static void query1(Connection connection,int value){
+	private static void query1(Connection connection,int value){
 		if(connection == null){
 			return;
 		}
@@ -398,7 +404,7 @@ public class Utils {
 		}
 	}
 
-	public static void insertBatch(Connection conn, List<TableRow> rows){
+	private static void insertBatch(Connection conn, List<TableRow> rows){
 		if(conn == null){
 			return;
 		}
