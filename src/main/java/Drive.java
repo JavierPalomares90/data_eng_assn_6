@@ -8,6 +8,7 @@ public class Drive
     public static void main(String[] args) {
         /** Variation I **/
         Utils.load();
+        Utils.createDB("C:/Users/javie/Documents/Data_Engineering/hw6.db");
         // Create the table
         Utils.createTable();
         // Insert the data with no index

@@ -18,13 +18,28 @@ public class Utils {
 	private static String QUERY_3 = "SELECT * FROM benchmark WHERE benchmark.columnA = ? AND benchmark.columnB = ?";
 
 
-	public static int NUM_ROWS   = 5000000;
-	public static int BATCH_SIZE = 50000;
+	/**TODO: change these values **/
+	public static int NUM_ROWS   = 5000;
+	public static int BATCH_SIZE = 500;
 
 	public static int[] columnAVals = {10301,23,308,7785,45898,867,73,88,343,234};
 	public static int[] columnBVals = {18775,3564,87,4787,5,92,345,48998,12,9};
 
 	private static String url = "jdbc:sqlite:C:/Users/javie/Documents/Data_Engineering/hw2.db";
+
+	public static void createDB(String filename){
+		url = "jdbc:sqlite:" + filename;
+		try {
+			Connection conn = DriverManager.getConnection(url);
+			if (conn != null) {
+				DatabaseMetaData meta = conn.getMetaData();
+				System.out.println("The driver name is " + meta.getDriverName());
+				System.out.println("A new database has been created.");
+			}
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+		}
+	}
 
 	public static void load(){
 		try
