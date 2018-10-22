@@ -18,8 +18,8 @@ public class Utils {
 	private static String QUERY_3 = "SELECT * FROM benchmark WHERE benchmark.columnA = ? AND benchmark.columnB = ?";
 
 
-	public static int NUM_ROWS   = 5000;
-	public static int BATCH_SIZE = 100;
+	public static int NUM_ROWS   = 5000000;
+	public static int BATCH_SIZE = 50000;
 
 	public static int[] columnAVals = {10301,23,308,7785,45898,867,73,88,343,234};
 	public static int[] columnBVals = {18775,3564,87,4787,5,92,345,48998,12,9};

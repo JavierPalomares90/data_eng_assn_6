@@ -95,6 +95,8 @@ public class Drive
         Utils.dropTable();
 
 
+        rows = null;
+        System.gc();
 
         /** Variation II **/
         // Create the table
