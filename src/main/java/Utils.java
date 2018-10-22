@@ -24,6 +24,169 @@ public class Utils {
 	public static int[] columnAVals = {10301,23,308,7785,45898,867,73,88,343,234};
 	public static int[] columnBVals = {18775,3564,87,4787,5,92,345,48998,12,9};
 
+	private static String url = "jdbc:sqlite:C:/Users/javie/Documents/Data_Engineering/hw2.db";
+
+	public static void load(){
+		try
+		{
+			Class.forName("org.sqlite.JDBC");
+		} catch (ClassNotFoundException e)
+		{
+			e.printStackTrace();
+			System.err.println("Unable to find driver");
+		}
+	}
+
+	public static double createTable(){
+		Connection connection = Utils.connect(url);
+		long startTime = System.nanoTime();
+		Utils.createTable(connection);
+		long endTime = System.nanoTime();
+		long executionTime = endTime - startTime;
+		Utils.closeConnection(connection);
+		return executionTime;
+	}
+
+	public static double insertData(List<TableRow> rows){
+		Connection connection = Utils.connect(url);
+		long startTime = System.nanoTime();
+		Utils.insertBatch(connection,rows);
+		long endTime = System.nanoTime();
+		long executionTime = endTime - startTime;
+		double seconds = (double) executionTime/ 1000000000.0;
+		System.out.println("Variation I took " + seconds + " to insert " + Utils.NUM_ROWS + " rows.");
+		Utils.closeConnection(connection);
+		return executionTime;
+	}
+
+	public static double createIndexA(){
+		Connection connection = Utils.connect(url);
+		long startTime = System.nanoTime();
+		Utils.createIndexColumnA(connection);
+		long endTime = System.nanoTime();
+		long executionTime = endTime - startTime;
+		double seconds = (double) executionTime/ 1000000000.0;
+		System.out.println("Variation I took " + seconds + " to createIndex A" + Utils.NUM_ROWS + " rows.");
+		Utils.closeConnection(connection);
+		return  executionTime;
+	}
+
+	public static double createIndexB()
+	{
+		Connection connection = Utils.connect(url);
+		long startTime = System.nanoTime();
+		Utils.createIndexColumnB(connection);
+		long endTime = System.nanoTime();
+		long executionTime = endTime - startTime;
+		double seconds = (double) executionTime / 1000000000.0;
+		System.out.println("Variation I took " + seconds + " to createIndex B" + Utils.NUM_ROWS + " rows.");
+		Utils.closeConnection(connection);
+		return executionTime;
+	}
+
+	public static double createIndexAB(){
+		Connection connection = Utils.connect(url);
+		long startTime = System.nanoTime();
+		Utils.createIndexColumnAB(connection);
+		Utils.closeConnection(connection);
+		long endTime = System.nanoTime();
+		long executionTime = endTime - startTime;
+		double seconds = (double) executionTime / 1000000000.0;
+		System.out.println("Variation I took " + seconds + " to createIndex A/B" + Utils.NUM_ROWS + " rows.");
+		Utils.closeConnection(connection);
+		return executionTime;
+	}
+
+	public static double query1(){
+		Connection connection = Utils.connect(url);
+		int numLoops = Utils.columnAVals.length;
+		double executionTime = 0.0;
+		for(int i = 0; i < numLoops; i++){
+			int n = Utils.columnAVals[i];
+			long startTime = System.nanoTime();
+			Utils.query1(connection,n);
+
+			long endTime = System.nanoTime();
+			long t = endTime - startTime;
+			executionTime += (double) t;
+
+		}
+		executionTime = executionTime / (1.0 * numLoops);
+		double seconds = (double) executionTime/ 1000000000.0;
+		System.out.println("Variation I took an average of " + seconds + " to run Query 1");
+		Utils.closeConnection(connection);
+		return executionTime;
+	}
+
+	public static double query2(){
+		Connection connection = Utils.connect(url);
+		int numLoops = Utils.columnAVals.length;
+		double executionTime = 0.0;
+		for(int i = 0; i < numLoops; i++){
+			int n = Utils.columnBVals[i];
+			long startTime = System.nanoTime();
+			Utils.query2(connection,n);
+
+			long endTime = System.nanoTime();
+			long t = endTime - startTime;
+			executionTime += (double) t;
+		}
+		executionTime = executionTime / (1.0 * numLoops);
+		double seconds = (double) executionTime/ 1000000000.0;
+		System.out.println("Variation I took an average of " + seconds + " to run Query 2");
+		Utils.closeConnection(connection);
+		return executionTime;
+	}
+
+	public static double query3(){
+		Connection connection = Utils.connect(url);
+		int numLoops = Utils.columnBVals.length;
+		double executionTime = 0.0;
+		for(int i = 0; i < numLoops; i++){
+			int n1 = Utils.columnAVals[i];
+			int n2 = Utils.columnBVals[i];
+			long startTime = System.nanoTime();
+			Utils.query3(connection,n1,n2);
+
+			long endTime = System.nanoTime();
+			long t = endTime - startTime;
+			executionTime += (double) t;
+
+		}
+		executionTime = executionTime / (1.0 * numLoops);
+		double seconds = (double) executionTime/ 1000000000.0;
+		System.out.println("Variation I took an average of " + seconds + " to run Query 3");
+		Utils.closeConnection(connection);
+		return executionTime;
+	}
+
+	public static void dropTable()
+	{
+		Connection connection = Utils.connect(url);
+		Utils.dropTable(connection);
+		Utils.closeConnection(connection);
+	}
+
+	public static void dropIndexA(){
+		Connection connection = Utils.connect(url);
+		Utils.dropIndexA(connection);
+		Utils.closeConnection(connection);
+
+	}
+
+	public static void dropIndexB(){
+		Connection connection = Utils.connect(url);
+		Utils.dropIndexB(connection);
+		Utils.closeConnection(connection);
+
+	}
+
+	public static void dropIndexAB(){
+		Connection connection = Utils.connect(url);
+		Utils.dropIndexAB(connection);
+		Utils.closeConnection(connection);
+
+	}
 	public static Connection connect(String url) {
 		Connection conn = null;
 		try {
