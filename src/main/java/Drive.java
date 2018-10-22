@@ -2,6 +2,7 @@ import java.util.List;
 
 public class Drive
 {
+    private static String TAB = "\t";
     public static void main(String[] args) {
         /** Variation I **/
         Utils.load();
@@ -49,6 +50,7 @@ public class Drive
         Utils.clearCache();
         double query3Var1IndexB = Utils.query3();
 
+
         // drop Index B
         Utils.dropIndexB();
 
@@ -90,10 +92,13 @@ public class Drive
         Utils.createIndexAB();
         // load the date
         double insertVar1IndexAB = Utils.insertData(rows);
+        Utils.dropTable();
 
 
 
         /** Variation II **/
+        // Create the table
+        Utils.createTable();
         rows = VariationII.generateRows(Utils.NUM_ROWS);
         double insertVar2 = Utils.insertData(rows);
 
@@ -176,6 +181,18 @@ public class Drive
         Utils.createIndexAB();
         // load the date
         double insertVar2IndexAB = Utils.insertData(rows);
+
+        System.out.println("========VARIATION I==========");
+        System.out.println(insertVar1       + TAB + query1Var1       + TAB + query2Var1       + TAB + query3Var1 + "\n");
+        System.out.println(insertVar1IndexA + TAB + query1Var1IndexA + TAB + query2Var1IndexA + TAB + query3Var1IndexA+ "\n");
+        System.out.println(insertVar1IndexB + TAB + query1Var1IndexB + TAB + query2Var1IndexB + TAB + query3Var1IndexB + "\n");
+        System.out.println(insertVar1IndexAB + TAB + query1Var1IndexAB + TAB + query2Var1IndexAB + TAB + query3Var1IndexAB + "\n");
+
+        System.out.println("========VARIATION II==========");
+        System.out.println(insertVar2       + TAB + query1Var2       + TAB + query2Var2       + TAB + query3Var2 + "\n");
+        System.out.println(insertVar2IndexA + TAB + query1Var2IndexA + TAB + query2Var2IndexA + TAB + query3Var2IndexA+ "\n");
+        System.out.println(insertVar2IndexB + TAB + query1Var2IndexB + TAB + query2Var2IndexB + TAB + query3Var2IndexB + "\n");
+        System.out.println(insertVar2IndexAB + TAB + query1Var2IndexAB + TAB + query2Var2IndexAB + TAB + query3Var2IndexAB + "\n");
     }
 
 }

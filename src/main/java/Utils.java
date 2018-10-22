@@ -18,8 +18,8 @@ public class Utils {
 	private static String QUERY_3 = "SELECT * FROM benchmark WHERE benchmark.columnA = ? AND benchmark.columnB = ?";
 
 
-	public static int NUM_ROWS   = 5000000;
-	public static int BATCH_SIZE = 50000;
+	public static int NUM_ROWS   = 5000;
+	public static int BATCH_SIZE = 100;
 
 	public static int[] columnAVals = {10301,23,308,7785,45898,867,73,88,343,234};
 	public static int[] columnBVals = {18775,3564,87,4787,5,92,345,48998,12,9};
@@ -60,7 +60,6 @@ public class Utils {
 		long endTime = System.nanoTime();
 		long executionTime = endTime - startTime;
 		double seconds = (double) executionTime/ 1000000000.0;
-		System.out.println("Variation I took " + seconds + " to insert " + Utils.NUM_ROWS + " rows.");
 		Utils.closeConnection(connection);
 		return executionTime;
 	}
@@ -72,7 +71,6 @@ public class Utils {
 		long endTime = System.nanoTime();
 		long executionTime = endTime - startTime;
 		double seconds = (double) executionTime/ 1000000000.0;
-		System.out.println("Variation I took " + seconds + " to createIndex A" + Utils.NUM_ROWS + " rows.");
 		Utils.closeConnection(connection);
 		return  executionTime;
 	}
@@ -85,7 +83,6 @@ public class Utils {
 		long endTime = System.nanoTime();
 		long executionTime = endTime - startTime;
 		double seconds = (double) executionTime / 1000000000.0;
-		System.out.println("Variation I took " + seconds + " to createIndex B" + Utils.NUM_ROWS + " rows.");
 		Utils.closeConnection(connection);
 		return executionTime;
 	}
@@ -98,7 +95,6 @@ public class Utils {
 		long endTime = System.nanoTime();
 		long executionTime = endTime - startTime;
 		double seconds = (double) executionTime / 1000000000.0;
-		System.out.println("Variation I took " + seconds + " to createIndex A/B" + Utils.NUM_ROWS + " rows.");
 		Utils.closeConnection(connection);
 		return executionTime;
 	}
@@ -118,8 +114,6 @@ public class Utils {
 
 		}
 		executionTime = executionTime / (1.0 * numLoops);
-		double seconds = (double) executionTime/ 1000000000.0;
-		System.out.println("Variation I took an average of " + seconds + " to run Query 1");
 		Utils.closeConnection(connection);
 		return executionTime;
 	}
@@ -138,8 +132,6 @@ public class Utils {
 			executionTime += (double) t;
 		}
 		executionTime = executionTime / (1.0 * numLoops);
-		double seconds = (double) executionTime/ 1000000000.0;
-		System.out.println("Variation I took an average of " + seconds + " to run Query 2");
 		Utils.closeConnection(connection);
 		return executionTime;
 	}
@@ -160,8 +152,6 @@ public class Utils {
 
 		}
 		executionTime = executionTime / (1.0 * numLoops);
-		double seconds = (double) executionTime/ 1000000000.0;
-		System.out.println("Variation I took an average of " + seconds + " to run Query 3");
 		Utils.closeConnection(connection);
 		return executionTime;
 	}
@@ -235,6 +225,7 @@ public class Utils {
 	private static void dropTable(Connection conn){
 		try
 		{
+            conn.setAutoCommit(false);
 			Statement stmt = conn.createStatement();
 			stmt.executeUpdate(DROP_TABLE);
 			conn.commit();
